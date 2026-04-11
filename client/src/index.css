@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Light theme (default) ─────────────────────────────────────── */
+:root {
+  --button-outline: rgba(0,0,0, .06);
+  --badge-outline: rgba(0,0,0, .04);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(0,0,0, .03);
+  --elevate-2: rgba(0,0,0, .06);
+
+  /* Base palette — warm paper */
+  --background: 40 30% 97%;
+  --foreground: 240 10% 12%;
+  --border: 40 12% 84%;
+  --input: 40 12% 90%;
+  --ring: 240 10% 65%;
+
+  /* Surface layers */
+  --card: 40 18% 93%;
+  --card-foreground: 240 10% 12%;
+  --card-border: 40 12% 84%;
+
+  --popover: 40 18% 94%;
+  --popover-foreground: 240 10% 12%;
+  --popover-border: 40 12% 82%;
+
+  --muted: 40 12% 90%;
+  --muted-foreground: 240 8% 25%;
+
+  --accent: 40 10% 87%;
+  --accent-foreground: 240 10% 12%;
+
+  /* Semantic */
+  --primary: 161 72% 30%;
+  --primary-foreground: 40 30% 97%;
+
+  --secondary: 40 10% 87%;
+  --secondary-foreground: 240 10% 12%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 40 30% 97%;
+
+  /* Charts */
+  --chart-1: 161 72% 30%;
+  --chart-2: 0 72% 51%;
+  --chart-3: 240 6% 36%;
+  --chart-4: 240 6% 60%;
+  --chart-5: 240 6% 72%;
+
+  /* Typography */
+  --font-sans: 'JetBrains Mono', monospace;
+  --font-serif: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius: 6px;
+  --shadow-2xs: none; --shadow-xs: none; --shadow-sm: none;
+  --shadow: none; --shadow-md: none; --shadow-lg: none;
+  --shadow-xl: none; --shadow-2xl: none;
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  /* App custom vars — light */
+  --clr-text-primary: #1a1a22;
+  --clr-text-secondary: #2d2d38;
+  --clr-text-muted: #484854;
+  --clr-surface: #eeece8;
+  --clr-surface-raised: #e6e3de;
+  --clr-border-subtle: rgba(0,0,0,0.04);
+  --clr-border-visible: rgba(0,0,0,0.10);
+  --clr-green: #0a7a56;
+  --clr-green-bg: rgba(10,122,86,0.08);
+  --clr-green-border: rgba(10,122,86,0.18);
+  --clr-red: #c53030;
+  --clr-red-bg: rgba(197,48,48,0.08);
+  --clr-red-border: rgba(197,48,48,0.18);
+  --clr-orange: #b45309;
+
+  --primary-border: hsl(var(--primary));
+  --secondary-border: hsl(var(--secondary));
+  --muted-border: hsl(var(--muted));
+  --accent-border: hsl(var(--accent));
+  --destructive-border: hsl(var(--destructive));
+}
+
+/* ─── Dark theme ─────────────────────────────────────────────────── */
+.dark {
+  --button-outline: rgba(255,255,255, .06);
+  --badge-outline: rgba(255,255,255, .04);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
+
+  --background: 240 17% 5%;
+  --foreground: 240 20% 93%;
+  --border: 240 16% 14%;
+  --input: 240 16% 16%;
+  --ring: 240 16% 18%;
+
+  --card: 240 18% 9%;
+  --card-foreground: 240 20% 93%;
+  --card-border: 240 16% 13%;
+
+  --popover: 240 16% 12%;
+  --popover-foreground: 240 20% 93%;
+  --popover-border: 240 16% 16%;
+
+  --muted: 240 16% 12%;
+  --muted-foreground: 240 9% 52%;
+
+  --accent: 240 16% 14%;
+  --accent-foreground: 240 20% 93%;
+
+  --primary: 160 84% 39%;
+  --primary-foreground: 240 17% 5%;
+
+  --secondary: 240 16% 14%;
+  --secondary-foreground: 240 20% 93%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 240 20% 93%;
+
+  --chart-1: 160 84% 39%;
+  --chart-2: 0 84% 60%;
+  --chart-3: 240 9% 52%;
+  --chart-4: 240 9% 40%;
+  --chart-5: 240 9% 30%;
+
+  --shadow-2xs: none; --shadow-xs: none; --shadow-sm: none;
+  --shadow: none; --shadow-md: none; --shadow-lg: none;
+  --shadow-xl: none; --shadow-2xl: none;
+
+  /* App custom vars — dark */
+  --clr-text-primary: #e8e8f0;
+  --clr-text-secondary: #7b7b90;
+  --clr-text-muted: #4a4a5a;
+  --clr-surface: #12121a;
+  --clr-surface-raised: #1a1a24;
+  --clr-border-subtle: rgba(255,255,255,0.03);
+  --clr-border-visible: rgba(255,255,255,0.06);
+  --clr-green: #10b981;
+  --clr-green-bg: rgba(16,185,129,0.06);
+  --clr-green-border: rgba(16,185,129,0.12);
+  --clr-red: #ef4444;
+  --clr-red-bg: rgba(239,68,68,0.06);
+  --clr-red-border: rgba(239,68,68,0.12);
+  --clr-orange: #f59e0b;
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
+  body {
+    @apply font-mono antialiased bg-background text-foreground;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--clr-border-visible); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--clr-text-muted); }
+}
+
+@layer utilities {
+  input[type="search"]::-webkit-search-cancel-button { @apply hidden; }
+
+  .kbd-hint {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    color: var(--clr-text-muted);
+    border: 1px solid var(--clr-border-visible);
+    background: var(--clr-surface-raised);
+  }
+}

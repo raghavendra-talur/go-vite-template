@@ -1,0 +1,9 @@
+node_modules/
+dist/
+!server-go/dist/public/placeholder
+server-go/tmp/
+.env
+*.db
+*.db-wal
+*.db-shm
+*.lock

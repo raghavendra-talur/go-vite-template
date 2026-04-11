@@ -1,0 +1,107 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to build, for example v0.1.0"
+        required: true
+      publish_release:
+        description: "Publish release assets after the build succeeds"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release-meta:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+      version: ${{ steps.meta.outputs.version }}
+      checkout_ref: ${{ steps.meta.outputs.checkout_ref }}
+    steps:
+      - id: meta
+        env:
+          EVENT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          checkout_ref="${tag}"
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            tag="${EVENT_TAG}"
+            checkout_ref="${GITHUB_SHA}"
+          fi
+          version="${tag#v}"
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "checkout_ref=${checkout_ref}" >> "$GITHUB_OUTPUT"
+
+  build-server:
+    needs: release-meta
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            target_os: linux
+            target_arch: x64
+          - runner: macos-15
+            target_os: darwin
+            target_arch: arm64
+    runs-on: ${{ matrix.runner }}
+    env:
+      VERSION: ${{ needs.release-meta.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.release-meta.outputs.checkout_ref }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: server-go/go.mod
+          cache-dependency-path: server-go/go.sum
+      - run: npm ci
+      - run: npx vite build
+      - run: cd server-go && go test ./...
+      - run: cd server-go && go build -ldflags "-X main.Version=${VERSION}" -o ../dist/go-vite-template .
+      - run: bash ./scripts/smoke-server.sh ./dist/go-vite-template
+      - run: mkdir -p dist/release
+      - run: bash ./scripts/release/package-server.sh ./dist/go-vite-template "${{ matrix.target_os }}" "${{ matrix.target_arch }}" "$VERSION" ./dist/release
+      - uses: actions/upload-artifact@v5
+        with:
+          name: server-${{ matrix.target_os }}-${{ matrix.target_arch }}
+          path: dist/release/*.tar.gz
+
+  publish:
+    needs:
+      - release-meta
+      - build-server
+    if: ${{ github.event_name == 'push' || github.event.inputs.publish_release == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ needs.release-meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        with:
+          path: dist/release
+          merge-multiple: true
+      - run: |
+          cd dist/release
+          shasum -a 256 ./* > checksums.txt
+      - run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/release/* --clobber
+          else
+            gh release create "$TAG" --title "$TAG" --generate-notes dist/release/*
+          fi
