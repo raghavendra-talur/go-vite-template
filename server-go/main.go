@@ -24,6 +24,7 @@ import (
 	"__MODULE_PATH__/server-go/db"
 	"__MODULE_PATH__/server-go/middleware"
 	"__MODULE_PATH__/server-go/modules/health"
+	"__MODULE_PATH__/server-go/modules/terminal"
 	"__MODULE_PATH__/server-go/modules/tokens"
 )
 
@@ -243,6 +244,7 @@ Flags:
 
 		health.RegisterRoutes(v1)
 		tokens.RegisterRoutes(v1)
+		terminal.RegisterRoutes(v1, cfg)
 
 		// Register your modules here:
 		// items.RegisterRoutes(v1)

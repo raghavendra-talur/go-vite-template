@@ -3,7 +3,9 @@ module __MODULE_PATH__/server-go
 go 1.24.1
 
 require (
+	github.com/creack/pty v1.1.24
 	github.com/go-chi/chi/v5 v5.2.5
+	github.com/gorilla/websocket v1.5.3
 	github.com/joho/godotenv v1.5.1
 	modernc.org/sqlite v1.46.1
 )

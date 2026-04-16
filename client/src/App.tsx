@@ -2,8 +2,25 @@ import { useState, useEffect, useCallback } from "react";
 import { queryClient, getStoredToken, clearStoredToken, setOnUnauthorized } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import TokenEntry from "@/pages/TokenEntry";
+import Landing from "@/pages/Landing";
+import Terminal from "@/components/Terminal";
+import BottomBar, { type AgentStatus } from "@/components/BottomBar";
 
 function MainApp() {
+  const [terminalOpen, setTerminalOpen] = useState(true);
+  const [agentStatus, setAgentStatus] = useState<AgentStatus>("connecting");
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "`") {
+        e.preventDefault();
+        setTerminalOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+
   return (
     <div
       className="flex flex-col overflow-hidden"
@@ -12,16 +29,24 @@ function MainApp() {
         height: "100dvh",
       }}
     >
-      <div className="flex-1 flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <h1 className="text-lg font-semibold" style={{ color: "var(--clr-text-primary)" }}>
-            __DISPLAY_NAME__
-          </h1>
-          <p className="text-[13px]" style={{ color: "var(--clr-text-muted)" }}>
-            Your app starts here. Edit <code className="text-[12px]" style={{ color: "var(--clr-text-secondary)" }}>client/src/App.tsx</code>.
-          </p>
+      <Landing />
+      <BottomBar
+        isOpen={terminalOpen}
+        onToggle={() => setTerminalOpen((prev) => !prev)}
+        status={agentStatus}
+      />
+      {terminalOpen && (
+        <div
+          style={{
+            height: "40vh",
+            background: "#1a1a22",
+            borderTop: "1px solid var(--clr-border-visible)",
+            flexShrink: 0,
+          }}
+        >
+          <Terminal onStatusChange={setAgentStatus} />
         </div>
-      </div>
+      )}
     </div>
   );
 }

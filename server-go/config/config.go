@@ -17,12 +17,14 @@ func init() {
 }
 
 type Config struct {
-	DBPath  string   // SQLite database file path
-	Port    int
-	Hosts   []string // bind addresses (default: ["127.0.0.1"])
-	DataDir string   // local filesystem storage
-	DevMode bool
-	ViteURL string   // Vite dev server URL for proxying in dev mode
+	DBPath   string   // SQLite database file path
+	Port     int
+	Hosts    []string // bind addresses (default: ["127.0.0.1"])
+	DataDir  string   // local filesystem storage
+	DevMode  bool
+	ViteURL  string   // Vite dev server URL for proxying in dev mode
+	AgentCmd string   // AI agent command for the web terminal (e.g., "claude")
+	WorkDir  string   // working directory for the agent process
 }
 
 // expandHome replaces a leading ~ with the user's home directory.
@@ -82,12 +84,21 @@ func Load() *Config {
 		viteURL = "http://127.0.0.1:9005"
 	}
 
+	agentCmd := os.Getenv("AGENT_CMD")
+
+	workDir := os.Getenv("WORK_DIR")
+	if workDir == "" {
+		workDir, _ = os.Getwd()
+	}
+
 	return &Config{
-		DBPath:  dbPath,
-		Port:    port,
-		Hosts:   hosts,
-		DataDir: dataDir,
-		DevMode: devMode,
-		ViteURL: viteURL,
+		DBPath:   dbPath,
+		Port:     port,
+		Hosts:    hosts,
+		DataDir:  dataDir,
+		DevMode:  devMode,
+		ViteURL:  viteURL,
+		AgentCmd: agentCmd,
+		WorkDir:  workDir,
 	}
 }

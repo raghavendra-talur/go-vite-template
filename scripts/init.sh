@@ -95,7 +95,7 @@ replace_in() {
 # ---- Steps ------------------------------------------------------------------
 # Add new steps by defining collect_<name> + apply_<name> and appending to STEPS.
 
-STEPS=(naming)
+STEPS=(naming agent)
 
 # -- Step: naming -------------------------------------------------------------
 
@@ -137,13 +137,15 @@ apply_naming() {
   replace_in "__DISPLAY_NAME__" "$DISPLAY_NAME" \
     README.md \
     client/index.html \
-    client/src/App.tsx
+    client/src/App.tsx \
+    client/src/pages/Landing.tsx
 
   # __MODULE_PATH__ — Go module base (imports use __MODULE_PATH__/server-go/...)
   replace_in "__MODULE_PATH__" "$MODULE_PATH" \
     server-go/go.mod \
     server-go/main.go \
     server-go/modules/tokens/storage.go \
+    server-go/modules/terminal/handler.go \
     server-go/middleware/auth.go
 
   # __DESCRIPTION__ — HTML meta description
@@ -155,6 +157,27 @@ apply_naming() {
     echo "Regenerating package-lock.json..."
     npm install --package-lock-only --ignore-scripts --silent 2>/dev/null || true
   fi
+}
+
+# -- Step: agent --------------------------------------------------------------
+
+collect_agent() {
+  echo ""
+  echo "=== AI Agent ==="
+  echo ""
+
+  prompt AGENT_CMD "AI agent command for the web terminal (e.g., claude, aider, goose)" "claude"
+}
+
+apply_agent() {
+  echo "Configuring agent..."
+
+  # Append AGENT_CMD to .env (create if it doesn't exist)
+  if [[ -f .env ]]; then
+    # Remove any existing AGENT_CMD line
+    sedi '/^AGENT_CMD=/d' .env
+  fi
+  echo "AGENT_CMD=$AGENT_CMD" >> .env
 }
 
 # ---- Main -------------------------------------------------------------------
@@ -180,6 +203,7 @@ main() {
   echo "  Display name:  $DISPLAY_NAME"
   echo "  Module path:   $MODULE_PATH"
   echo "  Description:   $DESCRIPTION"
+  echo "  Agent command: $AGENT_CMD"
   echo ""
 
   prompt CONFIRM "Proceed? (y/n)" "y"

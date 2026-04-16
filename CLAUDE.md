@@ -61,6 +61,8 @@ All endpoints are versioned under `/api/v1/` and require a Bearer token.
 - `DB_PATH` — SQLite database path (default: `DATA_DIR/__APP_NAME__.db`)
 - `DEV` — Enable Vite dev proxy mode
 - `VITE_URL` — Vite dev server URL (default: http://127.0.0.1:9005)
+- `AGENT_CMD` — AI agent command for the web terminal (e.g., `claude`)
+- `WORK_DIR` — Working directory for the agent process (default: current directory)
 
 ## Design Guidelines
 
