@@ -26,7 +26,7 @@ dev:
 	@$(MAKE) -j2 dev-backend dev-frontend PORT=$(PORT)
 
 dev-backend:
-	cd server-go && DEV=1 PORT=$(PORT) VITE_URL=http://127.0.0.1:$(VITE_DEV_PORT) air
+	cd server-go && DEV=1 PORT=$(PORT) VITE_URL=http://$(or $(HOST),127.0.0.1):$(VITE_DEV_PORT) air
 
 dev-frontend:
 	PORT=$(PORT) VITE_PORT=$(VITE_DEV_PORT) npx vite --port $(VITE_DEV_PORT) --strictPort

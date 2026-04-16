@@ -16,14 +16,15 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
-    host: "127.0.0.1",
+    host: process.env.HOST || "127.0.0.1",
     port: parseInt(process.env.VITE_PORT || "9005"),
+    allowedHosts: true,
     proxy: {
       "/api": {
-        target: `http://127.0.0.1:${process.env.PORT || "9002"}`,
+        target: `http://${process.env.HOST || "127.0.0.1"}:${process.env.PORT || "9002"}`,
         ws: true,
       },
-      "/files": `http://127.0.0.1:${process.env.PORT || "9002"}`,
+      "/files": `http://${process.env.HOST || "127.0.0.1"}:${process.env.PORT || "9002"}`,
     },
   },
 });

@@ -65,6 +65,24 @@ make service-logs
 └── .github/workflows/    # CI, DCO, Release
 ```
 
+## LAN access / reverse proxy
+
+To expose the dev server on a LAN address or run behind a reverse proxy (Caddy, nginx, etc.):
+
+```bash
+# .env
+HOST=192.168.1.5   # or 0.0.0.0 for all interfaces
+PORT=9002
+```
+
+Both the Go backend and Vite dev server will bind to `HOST`. Vite is configured with `allowedHosts: true`, so requests arriving via a proxy hostname won't be rejected.
+
+For production behind a reverse proxy, pass the flags directly:
+
+```bash
+./dist/go-vite-template --port 9002 --host 0.0.0.0
+```
+
 ## Customizing
 
 1. Change `APP_NAME` in the Makefile
