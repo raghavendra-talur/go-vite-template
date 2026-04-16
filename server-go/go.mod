@@ -1,4 +1,4 @@
-module github.com/raghavendra-talur/go-vite-template/server-go
+module __MODULE_PATH__/server-go
 
 go 1.24.1
 

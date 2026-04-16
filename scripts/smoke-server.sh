@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BINARY="${1:-$REPO_ROOT/dist/go-vite-template}"
+BINARY="${1:-$REPO_ROOT/dist/__APP_NAME__}"
 
 if [[ ! -x "$BINARY" ]]; then
   echo "expected executable binary at $BINARY" >&2

@@ -47,7 +47,7 @@ export default function TokenEntry({ onAuthenticated }: TokenEntryProps) {
           <p className="text-[12px]" style={{ color: "var(--clr-text-muted)" }}>
             Enter your API token. On the server machine, run{" "}
             <code className="text-[11px]" style={{ color: "var(--clr-text-secondary)" }}>
-              ./dist/go-vite-template admin-token --raw
+              ./dist/__APP_NAME__ admin-token --raw
             </code>{" "}
             or open <code className="text-[11px]" style={{ color: "var(--clr-text-secondary)" }}>DATA_DIR/adminAuth.json</code>.
           </p>

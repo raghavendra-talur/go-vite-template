@@ -20,11 +20,11 @@ import (
 	"syscall"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/raghavendra-talur/go-vite-template/server-go/config"
-	"github.com/raghavendra-talur/go-vite-template/server-go/db"
-	"github.com/raghavendra-talur/go-vite-template/server-go/middleware"
-	"github.com/raghavendra-talur/go-vite-template/server-go/modules/health"
-	"github.com/raghavendra-talur/go-vite-template/server-go/modules/tokens"
+	"__MODULE_PATH__/server-go/config"
+	"__MODULE_PATH__/server-go/db"
+	"__MODULE_PATH__/server-go/middleware"
+	"__MODULE_PATH__/server-go/modules/health"
+	"__MODULE_PATH__/server-go/modules/tokens"
 )
 
 //go:embed dist/public

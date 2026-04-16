@@ -1,4 +1,4 @@
-# go-vite-template
+# __DISPLAY_NAME__
 
 A full-stack app template: **Go backend + React/Vite frontend + SQLite**, built for fast iteration and single-binary deployment.
 
@@ -31,14 +31,14 @@ Open http://localhost:9002. On first run, get your admin token:
 ```bash
 # In another terminal:
 make build
-./dist/go-vite-template admin-token --raw
+./dist/__APP_NAME__ admin-token --raw
 ```
 
 ### Production
 
 ```bash
 make build
-./dist/go-vite-template --port 9002
+./dist/__APP_NAME__ --port 9002
 ```
 
 ### Install as a service
@@ -80,14 +80,19 @@ Both the Go backend and Vite dev server will bind to `HOST`. Vite is configured 
 For production behind a reverse proxy, pass the flags directly:
 
 ```bash
-./dist/go-vite-template --port 9002 --host 0.0.0.0
+./dist/__APP_NAME__ --port 9002 --host 0.0.0.0
 ```
 
 ## Customizing
 
-1. Change `APP_NAME` in the Makefile
-2. Change `AppName` in `server-go/config/config.go`
-3. Change `module` in `server-go/go.mod`
-4. Add your domain modules under `server-go/modules/`
-5. Add migrations in `server-go/db/db.go`
-6. Build your frontend in `client/src/`
+After cloning, run the init script to set your project name, Go module path, and description:
+
+```bash
+bash scripts/init.sh
+```
+
+Then start building:
+
+1. Add your domain modules under `server-go/modules/`
+2. Add migrations in `server-go/db/db.go`
+3. Build your frontend in `client/src/`

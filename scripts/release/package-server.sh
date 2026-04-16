@@ -18,7 +18,7 @@ if [[ ! -x "$BINARY_PATH" ]]; then
 fi
 
 # Change this to your app name
-APP_NAME="go-vite-template"
+APP_NAME="__APP_NAME__"
 ARCHIVE_BASENAME="${APP_NAME}-server-${TARGET_OS}-${TARGET_ARCH}"
 STAGE_DIR="$OUT_DIR/$ARCHIVE_BASENAME"
 

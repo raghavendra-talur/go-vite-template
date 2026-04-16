@@ -37,5 +37,5 @@ jobs:
       - run: npm ci
       - run: npx vite build
       - run: cd server-go && go test ./...
-      - run: cd server-go && go build -ldflags "-X main.Version=ci" -o ../dist/go-vite-template .
-      - run: bash ./scripts/smoke-server.sh ./dist/go-vite-template
+      - run: cd server-go && go build -ldflags "-X main.Version=ci" -o ../dist/__APP_NAME__ .
+      - run: bash ./scripts/smoke-server.sh ./dist/__APP_NAME__

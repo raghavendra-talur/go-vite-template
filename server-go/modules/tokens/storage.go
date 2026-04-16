@@ -7,7 +7,7 @@ import (
 	"encoding/hex"
 	"time"
 
-	"github.com/raghavendra-talur/go-vite-template/server-go/db"
+	"__MODULE_PATH__/server-go/db"
 )
 
 func mustParseTime(s string) time.Time {

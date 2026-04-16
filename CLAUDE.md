@@ -9,7 +9,7 @@ A full-stack app template with a React/TypeScript frontend and Go backend. Singl
 ## Commands
 
 - `make dev` — Start dev servers (Go backend on :9002 + Vite frontend on :9005 with proxy)
-- `make build` — Build frontend (Vite → dist/public/) and backend (Go → dist/go-vite-template)
+- `make build` — Build frontend (Vite → dist/public/) and backend (Go → dist/__APP_NAME__)
 - `make run` — Run production build
 - `npm run check` — TypeScript type checking (frontend only)
 
@@ -57,8 +57,8 @@ All endpoints are versioned under `/api/v1/` and require a Bearer token.
 ### Environment Variables
 - `PORT` — Server port (default: 9002)
 - `HOST` — Comma-separated bind addresses (default: `127.0.0.1`)
-- `DATA_DIR` — Base directory for DB and files (default: `$XDG_DATA_HOME/go-vite-template`)
-- `DB_PATH` — SQLite database path (default: `DATA_DIR/go-vite-template.db`)
+- `DATA_DIR` — Base directory for DB and files (default: `$XDG_DATA_HOME/__APP_NAME__`)
+- `DB_PATH` — SQLite database path (default: `DATA_DIR/__APP_NAME__.db`)
 - `DEV` — Enable Vite dev proxy mode
 - `VITE_URL` — Vite dev server URL (default: http://127.0.0.1:9005)
 

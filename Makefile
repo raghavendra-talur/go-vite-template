@@ -18,7 +18,7 @@ VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev
 LDFLAGS := -ldflags "-X main.Version=$(VERSION)"
 
 # App name — change this when cloning the template
-APP_NAME := go-vite-template
+APP_NAME := __APP_NAME__
 
 # Development: run Go backend + Vite frontend in parallel
 dev:

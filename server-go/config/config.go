@@ -39,7 +39,7 @@ func expandHome(path string) string {
 }
 
 // AppName is used for default data directory paths. Change this to your app name.
-const AppName = "go-vite-template"
+const AppName = "__APP_NAME__"
 
 func Load() *Config {
 	port := 9002

@@ -1,5 +1,5 @@
 {
-  "name": "go-vite-template",
+  "name": "__APP_NAME__",
   "version": "0.1.0",
   "type": "module",
   "private": true,

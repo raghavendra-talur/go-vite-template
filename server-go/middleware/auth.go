@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/raghavendra-talur/go-vite-template/server-go/modules/tokens"
+	"__MODULE_PATH__/server-go/modules/tokens"
 )
 
 // adminToken is set at startup via SetAdminToken.

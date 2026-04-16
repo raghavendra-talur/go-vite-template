@@ -72,10 +72,10 @@ jobs:
       - run: npm ci
       - run: npx vite build
       - run: cd server-go && go test ./...
-      - run: cd server-go && go build -ldflags "-X main.Version=${VERSION}" -o ../dist/go-vite-template .
-      - run: bash ./scripts/smoke-server.sh ./dist/go-vite-template
+      - run: cd server-go && go build -ldflags "-X main.Version=${VERSION}" -o ../dist/__APP_NAME__ .
+      - run: bash ./scripts/smoke-server.sh ./dist/__APP_NAME__
       - run: mkdir -p dist/release
-      - run: bash ./scripts/release/package-server.sh ./dist/go-vite-template "${{ matrix.target_os }}" "${{ matrix.target_arch }}" "$VERSION" ./dist/release
+      - run: bash ./scripts/release/package-server.sh ./dist/__APP_NAME__ "${{ matrix.target_os }}" "${{ matrix.target_arch }}" "$VERSION" ./dist/release
       - uses: actions/upload-artifact@v5
         with:
           name: server-${{ matrix.target_os }}-${{ matrix.target_arch }}

@@ -15,7 +15,7 @@ function MainApp() {
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center space-y-4">
           <h1 className="text-lg font-semibold" style={{ color: "var(--clr-text-primary)" }}>
-            go-vite-template
+            __DISPLAY_NAME__
           </h1>
           <p className="text-[13px]" style={{ color: "var(--clr-text-muted)" }}>
             Your app starts here. Edit <code className="text-[12px]" style={{ color: "var(--clr-text-secondary)" }}>client/src/App.tsx</code>.
