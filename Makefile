@@ -1,5 +1,12 @@
-.PHONY: dev dev-frontend dev-backend build run clean test check install uninstall \
+.PHONY: dev dev-frontend dev-backend check-air check-init build run clean test check install uninstall \
        service-start service-stop service-restart service-status service-logs
+
+# Guard: block all targets until the init script has been run
+check-init:
+	@if [ "$(APP_NAME)" = "__APP_N""AME__" ]; then \
+		echo "Error: template has not been initialized yet. Run: bash scripts/init.sh" >&2; \
+		exit 1; \
+	fi
 
 # Load .env if it exists (values can still be overridden on the command line)
 -include .env
@@ -21,9 +28,12 @@ LDFLAGS := -ldflags "-X main.Version=$(VERSION)"
 APP_NAME := __APP_NAME__
 
 # Development: run Go backend + Vite frontend in parallel
-dev:
+dev: check-init check-air
 	@echo "Starting dev server on :$(PORT)..."
 	@$(MAKE) -j2 dev-backend dev-frontend PORT=$(PORT)
+
+check-air:
+	@command -v air >/dev/null 2>&1 || { echo "Error: 'air' is not installed. Install it with: go install github.com/air-verse/air@latest" >&2; exit 1; }
 
 dev-backend:
 	cd server-go && DEV=1 PORT=$(PORT) VITE_URL=http://$(or $(HOST),127.0.0.1):$(VITE_DEV_PORT) air
@@ -32,20 +42,20 @@ dev-frontend:
 	PORT=$(PORT) VITE_PORT=$(VITE_DEV_PORT) npx vite --port $(VITE_DEV_PORT) --strictPort
 
 # Run all tests
-test:
+test: check-init
 	cd server-go && go test ./...
 	npm run check
 
 # Run Go backend tests only
-test-backend:
+test-backend: check-init
 	cd server-go && go test ./...
 
 # Run frontend type checks only
-check:
+check: check-init
 	npm run check
 
 # Build for production (frontend must be built first — it's embedded into the Go binary)
-build: build-frontend build-backend
+build: check-init build-frontend build-backend
 
 build-frontend:
 	npm install --prefer-offline
@@ -56,7 +66,7 @@ build-backend:
 	cd server-go && go build $(LDFLAGS) -o ../dist/$(APP_NAME) .
 
 # Run production build
-run:
+run: check-init
 	./dist/$(APP_NAME) --port $(PORT)
 
 # --- Service installation (macOS launchd / Linux systemd) ---
@@ -69,7 +79,7 @@ PLIST_DST   := $(HOME)/Library/LaunchAgents/$(PLIST_NAME).plist
 SYSTEMD_SRC := service/$(APP_NAME).service
 SYSTEMD_DST := $(HOME)/.config/systemd/user/$(APP_NAME).service
 
-install: build
+install: check-init build
 	@mkdir -p $(INSTALL_DIR)
 	cp dist/$(APP_NAME) $(INSTALL_DIR)/$(APP_NAME)
 	@echo "Binary installed to $(INSTALL_DIR)/$(APP_NAME)"
